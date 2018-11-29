@@ -274,23 +274,27 @@ class Local(object):
 				self.notify(Remote(npredecessor))
 			if command == 'get_successors':
 				result = json.dumps(self.get_successors())
+				
+			
+
 
 			# or it could be a user specified operation
 			for t in self.command_:
 				if command == t[0]:
 					result = t[1](request)
+					
+			
+			if command == 'quit':
+				self.shutdown_ = True
+				self.socket_.close()
+				self.log("shutdown started")
+				
+				break
 
 			send_to_socket(conn, result)
 			conn.close()
 
-			if command == 'quit':
-				print 'allo'
-				sys.exit(0)
-				self.socket_.close()
-				self.shutdown_ = True
-				self.log("shutdown started")
-				
-				break
+
 		self.log("execution terminated")
 
 	def register_command(self, cmd, callback):

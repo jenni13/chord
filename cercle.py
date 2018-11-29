@@ -36,13 +36,14 @@ print "Done creating peers, our pid %s is" % os.getpid()
 while 1:
 	command = raw_input("Command: ")
 	if command == "add_node":
+		print 'allo'
 		while 1:
 			address = Address("127.0.0.1", random.randrange(10000, 60000))
 			if not address.__hash__() in hash_list:
 				ports_list.append(address.port)
 				print "New node at port %s" % address.port
 				address_list.append(address)
-				locals_list.append(Local(address, locals_list[random.randrange(len(locals_list))].address))
+				locals_list.append(Local(address, locals_list[random.randrange(len(locals_list))].address_))
 				break
 	else:
 		address = address_list[random.randrange(len(address_list))]
